@@ -1,0 +1,72 @@
+name: cms-ars3.1-moderate-microsoft-windows-server-2019-stig-overlay
+title: cms-ars3.1-moderate-microsoft-windows-server-2019-stig-overlay
+maintainer: The Authors
+copyright: The Authors
+copyright_email: you@example.com
+license: Apache-2.0
+summary: "TBD"
+version: 1.3.0
+
+depends:
+- name: microsoft-windows-server-2019-stig-baseline
+  path: ../microsoft-windows-server-2019-stig-baseline
+
+inputs:
+  - name: pass_lock_time #V-93143
+    desc: "Sets the number of min before a session is locked out [15]"
+    type: Numeric
+    value: 120
+    profile: microsoft-windows-server-2019-stig-baseline
+
+  - name: pass_lock_duration #V-93145
+    desc: "Account lockout duration must be configured to [15] minutes or greater"
+    type: Numeric
+    value: 60
+    profile: microsoft-windows-server-2019-stig-baseline
+
+  - name: maximum_idle_time #V-93509
+    desc: "Set the maximum connection idle time stated by your organiztion"
+    type: Numeric
+    value: 1800
+    profile: microsoft-windows-server-2019-stig-baseline
+
+  - name: maximum_password_age_machine #V-93285
+    desc: "Set the machine account maximum password age stated by your organiztion"
+    type: Numeric
+    value: 60
+    profile: microsoft-windows-server-2019-stig-baseline
+
+  - name: password_history_size #V-93479
+    desc: "Set the password history size stated by your organization"
+    type: Numeric
+    value: 6
+    profile: microsoft-windows-server-2019-stig-baseline
+
+  - name: minimum_password_length #V-93463
+    desc: "Set the minimum password length stated by your organization"
+    type: Numeric
+    value: 15
+    profile: microsoft-windows-server-2019-stig-baseline
+
+  - name: unused_account_age #V-93457
+    desc: "Set the maximum age in days for unused accounts stated by your organization"
+    type: Numeric
+    value: 60
+    profile: microsoft-windows-server-2019-stig-baseline
+
+  - name: LegalNoticeCaption
+    desc: "Use the default values or add an organization-defined legal notice caption"
+    type: Array
+    value:
+      - "CMS Notice and Consent Banner"
+      - "US Department of Health and Human Services Warning Statement"
+    profile: microsoft-windows-server-2019-stig-baseline
+
+  - name: LegalNoticeText
+    type: string
+    value: "* This warning banner provides privacy and security notices consistent with applicable federal laws, directives, and other federal guidance for accessing this Government system, which includes (1) this computer network, (2) all computers connected to this network, and (3) all devices and storage media attached to this network or to a computer on this network.
+    * This system is provided for Government authorized use only.
+    * Unauthorized or improper use of this system is prohibited and may result in disciplinary action and/or civil and criminal penalties.
+    * Personal use of social media and networking sites on this system is limited as to not interfere with official work duties and is subject to monitoring.
+    * By using this system, you understand and consent to the following:  - The Government may monitor, record, and audit your system usage, including usage of personal devices and email systems for official duties or to conduct HHS business. Therefore, you have no reasonable expectation of privacy regarding any communication or data transiting or stored on this system. At any time, and for any lawful Government purpose, the government may monitor, intercept, and search and seize any communication or data transiting or stored on this system.  - Any communication or data transiting or stored on this system may be disclosed or used for any lawful Government purposes."
+    profile: microsoft-windows-server-2019-stig-baseline
