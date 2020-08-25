@@ -2,6 +2,54 @@
 
 include_controls "microsoft-windows-server-2019-stig-baseline" do
 
+  control "V-92975" do
+    title "Windows Server 2019 must automatically remove or disable temporary user accounts after 60 days."
+    desc  "If temporary user accounts remain active when no longer needed or for an excessive period, these accounts may be used to gain unauthorized access. To mitigate this risk, automated termination of all temporary accounts must be set upon account creation.
+  
+      Temporary accounts are established as part of normal account activation procedures when there is a need for short-term accounts without the demand for immediacy in account activation.
+      If temporary accounts are used, the operating system must be configured to automatically terminate these types of accounts after a CMS-defined time period of 60 days.
+      To address access requirements, many operating systems may be integrated with enterprise-level authentication/access mechanisms that meet or exceed access control policy requirements."
+    desc  'check', "Review temporary user accounts for expiration dates.
+      Determine if temporary user accounts are used and identify any that exist. If none exist, this is NA.
+  
+      Domain Controllers:
+      Open \"PowerShell\".
+      Enter \"Search-ADAccount -AccountExpiring | FT Name, AccountExpirationDate\".
+      If \"AccountExpirationDate\" has not been defined within 60 days for any temporary user account, this is a finding.
+  
+      Member servers and standalone systems:
+      Open \"Command Prompt\".
+      Run \"Net user [username]\", where [username] is the name of the temporary user account.
+      If \"Account expires\" has not been defined within 60 days for any temporary user account, this is a finding."
+    desc  'fix', "Configure temporary user accounts to automatically expire within 60 days.
+      Domain accounts can be configured with an account expiration date, under \"Account\" properties.
+      Local accounts can be configured to expire with the command \"Net user [username] /expires:[mm/dd/yyyy]\", where username is the name of the temporary user account.
+      Delete any temporary user accounts that are no longer necessary."
+  end
+
+  control "V-92977" do
+    title "Windows Server 2019 must automatically remove or disable emergency accounts after the crisis is resolved or within 24 hours."
+    desc  "Emergency administrator accounts are privileged accounts established in response to crisis situations where the need for rapid account activation is required. Therefore, emergency account activation may bypass normal account authorization processes. If these accounts are automatically disabled, system maintenance during emergencies may not be possible, thus adversely affecting system availability.
+      Emergency administrator accounts are different from infrequently used accounts (i.e., local logon accounts used by system administrators when network or normal logon/access is not available). Infrequently used accounts are not subject to automatic termination dates. Emergency accounts are accounts created in response to crisis situations, usually for use by maintenance personnel. The automatic expiration or disabling time period may be extended as needed until the crisis is resolved; however, it must not be extended indefinitely. A permanent account should be established for privileged users who need long-term maintenance accounts.
+      To address access requirements, many operating systems can be integrated with enterprise-level authentication/access mechanisms that meet or exceed access control policy requirements."
+    desc  'check', "Determine if emergency administrator accounts are used and identify any that exist. If none exist, this is NA.
+      If emergency administrator accounts cannot be configured with an expiration date due to an ongoing crisis, the accounts must be disabled or removed when the crisis is resolved.
+      If emergency administrator accounts have not been configured with an expiration date or have not been disabled or removed following the resolution of a crisis, this is a finding.
+  
+      Domain Controllers:
+      Open \"PowerShell\".
+      Enter \"Search-ADAccount -AccountExpiring | FT Name, AccountExpirationDate\".
+      If \"AccountExpirationDate\" has been defined and is not within 24 hours for an emergency administrator account, this is a finding.
+  
+      Member servers and standalone systems:
+      Open \"Command Prompt\".
+      Run \"Net user [username]\", where [username] is the name of the emergency account.
+      If \"Account expires\" has been defined and is not within 24 hours for an emergency administrator account, this is a finding."
+    desc  'fix', "Remove emergency administrator accounts after a crisis has been resolved or configure the accounts to automatically expire within 24 hours.
+      Domain accounts can be configured with an account expiration date, under \"Account\" properties.
+      Local accounts can be configured to expire with the command \"Net user [username] /expires:[mm/dd/yyyy]\", where username is the name of the temporary user account."
+  end
+
   control "V-93019" do
     impact 0.0
     desc "caveat", "This is Not Applicable since the related security control is not included in CMS ARS 3.1"
@@ -141,6 +189,27 @@ include_controls "microsoft-windows-server-2019-stig-baseline" do
   control "V-93203" do
     impact 0.0
     desc "caveat", "This is Not Applicable since the related security control is not included in CMS ARS 3.1"
+  end
+
+  control "V-93209" do
+    title "Windows Server 2019 manually managed application account passwords must be changed at least every 60 days and when a system administrator with knowledge of the password leaves the organization."
+    desc  "Setting application account passwords to expire may cause applications to stop functioning. However, not changing them on a regular basis exposes them to attack. If managed service accounts are used, this alleviates the need to manually change application account passwords."
+    desc  'check', "Determine if manually managed application/service accounts exist. If none exist, this is NA.
+      If passwords for manually managed application/service accounts are not changed at least every 60 days and when an administrator with knowledge of the password leaves the organization, this is a finding.
+      Identify manually managed application/service accounts.
+      To determine the date a password was last changed:
+  
+      Domain controllers:
+      Open \"PowerShell\".
+      Enter \"Get-AdUser -Identity [application account name] -Properties PasswordLastSet | FT Name, PasswordLastSet\", where [application account name] is the name of the manually managed application/service account.
+      If the \"PasswordLastSet\" date is more than 60 days old, this is a finding.
+  
+      Member servers and standalone systems:
+      Open \"Command Prompt\".
+      Enter 'Net User [application account name] | Find /i \"Password Last Set\"', where [application account name] is the name of the manually managed application/service account.
+      If the \"Password Last Set\" date is more than 60 days old, this is a finding."
+    desc  'fix', "Change passwords for manually managed application/service accounts at least every 60 days and when an administrator with knowledge of the password leaves the organization.
+      It is recommended that system-managed service accounts be used whenever possible."
   end
 
   control "V-93285" do

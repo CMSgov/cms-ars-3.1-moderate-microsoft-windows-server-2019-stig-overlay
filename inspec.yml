@@ -12,6 +12,57 @@ depends:
   path: ../microsoft-windows-server-2019-stig-baseline
 
 inputs:
+  - name: temp_accounts_domain #V-92975
+    desc: "List of temporary accounts on the domain"
+    type: Array
+    value: 
+      -
+
+  - name: temp_accounts_local #V-92975
+    desc: "List of temporary accounts on local system"
+    type: Array
+    value: 
+      -
+
+  - name: temporary_account_period #V-92975
+    desc: "List the number of days that temporary accounts remain active for"
+    type: Numeric
+    value: 60
+
+  - name: emergency_accounts_domain #V-92977
+    desc: "List of emergency accounts on the domain"
+    type: Array
+    value: 
+      - 
+
+  - name: emergency_accounts_local #V-92977
+    desc: "List of emergency accounts on the system"
+    type: Array
+    value: 
+      - 
+
+  - name: emergency_account_period #V-92977
+    desc: "List the number of days that temporary accounts remain active for"
+    type: Numeric
+    value: 1
+
+  - name: application_accounts_domain #V-93209
+    desc: "List Application or Service Accounts domain"
+    type: Array
+    value: 
+      - 
+
+  - name: application_accounts_local #V-93209
+    desc: "List Application Local Accounts"
+    type: Array
+    value: 
+      - 
+
+  - name: app_password_age #V-93209
+    desc: "Set the number of days that manually managed application account passwords must be changed"
+    type: Number
+    value: 60
+
   - name: pass_lock_time #V-93143
     desc: "Sets the number of min before a session is locked out [15]"
     type: Numeric
