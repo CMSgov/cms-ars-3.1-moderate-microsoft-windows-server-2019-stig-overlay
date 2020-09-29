@@ -7,6 +7,13 @@ license: Apache-2.0
 summary: "TBD"
 version: 1.3.0
 
+supports:
+   - platform-name: 'windows_server_2019_essentials'
+   - platform-name: 'windows_server_2019_standard'
+   - platform-name: 'windows_server_2019_datacenter'
+   - platform: windows
+     release: 10.0.17763
+     
 depends:
 - name: microsoft-windows-server-2019-stig-baseline
   path: ../microsoft-windows-server-2019-stig-baseline
