@@ -87,7 +87,6 @@ The JSON InSpec results file may also be loaded into a __[full heimdall server](
 
 ## Special Thanks
 * Aaron Lippold - [aaronlippold](https://github.com/aaronlippold)
-* Shivani Karikar - [karikarshivani](https://github.com/karikarshivani)
 
 ## Contributing and Getting Help
 To report a bug or feature request, please open an [issue](https://github.com/CMSgov/cms-ars-3.1-moderate-microsoft-windows-server-2019-stig-overlay/issues/new).
