@@ -8,6 +8,11 @@ summary: "CMS ARS 3.1 Moderate Overlay InSpec Validation Profile for Windows Ser
 version: 1.3.1
 inspec_version: ">= 4.0"
 
+supports:
+   - platform-name: 'windows_server_2019_essentials'
+   - platform-name: 'windows_server_2019_standard'
+   - platform-name: 'windows_server_2019_datacenter'
+   
 depends:
 - name: microsoft-windows-server-2019-stig-baseline
   url: https://github.com/mitre/microsoft-windows-server-2019-stig-baseline/archive/master.tar.gz
